@@ -20,16 +20,17 @@ public class MainActivity extends AppCompatActivity {
         EditText edtalt = findViewById(R.id.editTextTextPersonName2);
         EditText edtpeso = findViewById(R.id.editTextTextPersonName);
         Button button = findViewById(R.id.button);
-        Float peso = Float.parseFloat(edtpeso.getText().toString());
-        Float alt = Float.parseFloat(edtalt.getText().toString());
-        Float imc = peso/(alt*alt);
+
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                Float peso = Float.parseFloat(edtpeso.getText().toString());
+                Float alt = Float.parseFloat(edtalt.getText().toString());
+                Float imc = peso/(alt*alt);
                 Intent i = new Intent(getApplicationContext(), MainActivity2.class);
                 i.putExtra("msg", edt.getText().toString());
-                i.putExtra("alt", edtalt.getText().toString());
-                i.putExtra("pes", edtpeso.getText().toString());
+                i.putExtra("alt", alt);
+                i.putExtra("pes", peso);
                 i.putExtra("imc", imc);
                 startActivity(i);
             }

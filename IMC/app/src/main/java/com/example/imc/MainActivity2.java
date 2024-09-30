@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 public class MainActivity2 extends AppCompatActivity {
 
-    Float  p, a, t;
+    Float  p, a ,t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,7 @@ public class MainActivity2 extends AppCompatActivity {
         p = getIntent().getExtras().getFloat("pes");
         a = getIntent().getExtras().getFloat("alt");
         t = getIntent().getExtras().getFloat("imc");
+        setPerfil(t);
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -32,8 +33,9 @@ public class MainActivity2 extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
-        public void setPerfil() {
+        public void setPerfil(Float t) {
             ImageView img = findViewById(R.id.imageView);
             TextView view = findViewById(R.id.textView12);
         if(t <= 18.5){
@@ -44,6 +46,7 @@ public class MainActivity2 extends AppCompatActivity {
             if (t <= 24.9){
                 view.setText("Normal");
                 img.setImageResource(R.drawable.normal);
+                 }
                 else{
                     if (t <= 29.9){
                         view.setText("Sobrepeso");
@@ -68,8 +71,7 @@ public class MainActivity2 extends AppCompatActivity {
                         }
                     }
                 }
-            }
+
         }
         }
-    }
 }
