@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class MainActivity2 extends AppCompatActivity {
 
     Float  p, a ,t;
+    String n;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +21,19 @@ public class MainActivity2 extends AppCompatActivity {
         TextView peso = findViewById(R.id.textView7);
         TextView alt = findViewById(R.id.textView9);
         TextView nome = findViewById(R.id.textView3);
+        TextView result = findViewById(R.id.textView11);
 
         p = getIntent().getExtras().getFloat("pes");
         a = getIntent().getExtras().getFloat("alt");
         t = getIntent().getExtras().getFloat("imc");
+        n = getIntent().getExtras().getString("msg");
+        String pes = String.valueOf(p);
+        peso.setText(pes);
+        String altu = String.valueOf(a);
+        alt.setText(altu);
+        nome.setText(n);
+        String imc = String.valueOf(t);
+        result.setText(imc);
         setPerfil(t);
 
 
