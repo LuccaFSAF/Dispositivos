@@ -1,0 +1,9 @@
+1.Explique o é um ViewGroup? para que servem? R:É um coponente view que contem outro métodos de exibição. Serve para uma organização mais fixa na tela.
+
+2.Explique o que são as constantes math_parent e wrap_content? R: O math_parent ocupa toda a tela do componente principal e o wrap_content ocupa apenas o espaço nescessário.
+
+3.Existem algumas classes viewgroups que são incorporadas no android, entre elas o LinearLayout, Explique como o LinearLayout organiza seus elementos filhos. O que acontece se você usar a orientação vertical versus horizontal? R: O LinearLayout suas views pela horizontal ou vertical, no horizontal os componentes vão ficar cada um do lado do outro, no vertical os componentes vão ficar cada componente abaixo do outro.
+
+4.Quais são as principais propriedades que controlam o comportamento dos elementos dentro de um LinearLayout? Explique a diferença entre layout_weight e layout_gravity
+R: A propriedade do layout_weight permite definir o espaço do layout na view proporcionando peso em cada view e o gravity define a posição,  se ela vai ser no centro, par cima, pra baixo, da direita e pra esquerda.
+
