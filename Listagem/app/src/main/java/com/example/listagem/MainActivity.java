@@ -3,8 +3,11 @@ package com.example.listagem;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,12 +17,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PlanetaDAO dao = new PlanetaDAO();
         setContentView(R.layout.activity_main);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1,
-                android.R.id.text2);
+        listview = findViewById(R.id.ListView);
+        PlanetaAdapter planeta = new PlanetaAdapter(this,R.layout.planetas,dao.planetas);
 
-        listview.setAdapter(adapter);
-        listview.setOnClickListener(new A);
+
+        listview.setAdapter(planeta);
+        /*listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(MainActivity.this ,Integer.toString(position), Toast.LENGTH_LONG.show());
+            }
+        });*/
     }
 }
