@@ -6,8 +6,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,15 +35,22 @@ public class MainActivity extends AppCompatActivity {
         //Definindo tratamento para evento de click
         button = findViewById(R.id.btnCadastrar);
         listview = findViewById(R.id.listView);
+
+        database = openOrCreateDatabase("meubd", MODE_PRIVATE, null);
+        database.execSQL("create table if not exists pessoas(id INTEGER primary key autoincrement,nome varchar, email varchar, dtnasc date);");
+        carregarListagem();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String nome = edtNome.getText().toString();
                 String email = edtEmail.getText().toString();
-                // data = edtData.getText().toString();
+                Date data = Date.valueOf(edtData.getText().toString());
+
                 ContentValues cv = new ContentValues();
                 cv.put("nome", nome);
                 cv.put("email", email);
+                cv.put("data" , data.getTime());
                 long status = database.insert("pessoas", null, cv);
 
                 if(status > 0){
@@ -57,20 +65,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        listview.setOnClickListener(new View.OnClickListener() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                String email;
-                
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
+                String email, nome, data;
+                String l = String.valueOf(i+1);
+
+                Cursor cursor = database.rawQuery("select * from pessoas where id = ?", new String[]{l});
+                cursor.moveToFirst();
+                nome = cursor.getString(1);
+                email = cursor.getString(2);
+                data = cursor.getString(3);
+
+                edtNome.setText(nome);
+                edtData.setText(email);
+                edtEmail.setText(data);
             }
         });
 
-        database = openOrCreateDatabase("meubd", MODE_PRIVATE, null);
-        database.execSQL("create table if not exists pessoas(id INTEGER primary key autoincrement,nome varchar, email varchar, dtnasc DATE)");
-        carregarListagem();
     }
     public void carregarListagem() {
-        Cursor cursor = database.rawQuery("Select * from pessoas", null);
+        Cursor cursor = database.rawQuery("Select * from pessoas;", null);
         cursor.moveToFirst();
         ArrayList<String> nomes = new ArrayList<>(0);
         while (!cursor.isAfterLast()) {
