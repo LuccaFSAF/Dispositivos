@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -45,16 +46,26 @@ public class MainActivity extends AppCompatActivity {
 
                 String nome = edtNome.getText().toString();
                 String email = edtEmail.getText().toString();
-                Date data = Date.valueOf(edtData.getText().toString());
+                String data = edtData.getText().toString();
+
+                SimpleDateFormat data1 = new SimpleDateFormat("aaaa-yy-xx");
+                SimpleDateFormat data2 = new SimpleDateFormat("xx/yy/aaaa");
+                String dataO;
+                try {
+                    dataO = data1.format(data2.parse(data));
+                } catch (ParseException e){
+                    throw new RuntimeException(e);
+                }
 
                 ContentValues cv = new ContentValues();
                 cv.put("nome", nome);
                 cv.put("email", email);
-                cv.put("data" , data.getTime());
+                cv.put("data" , dataO);
                 long status = database.insert("pessoas", null, cv);
 
                 if(status > 0){
                     Toast.makeText(getApplicationContext(), "Usuario inserido na tabela", Toast.LENGTH_SHORT).show();
+
                 }else {
                     Toast.makeText(getApplicationContext(), "Erro na inserção", Toast.LENGTH_SHORT).show();
                 }
