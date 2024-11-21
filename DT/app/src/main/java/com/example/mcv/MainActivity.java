@@ -48,8 +48,13 @@ public class MainActivity extends AppCompatActivity {
                 String email = edtEmail.getText().toString();
                 String data = edtData.getText().toString();
 
-                SimpleDateFormat data1 = new SimpleDateFormat("aaaa-yy-xx");
-                SimpleDateFormat data2 = new SimpleDateFormat("xx/yy/aaaa");
+                if (nome.isEmpty() || email.isEmpty() || data.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Preencha todos os campos!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                SimpleDateFormat data1 = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat data2 = new SimpleDateFormat("dd/MM/yyyy");
                 String dataO;
                 try {
                     dataO = data1.format(data2.parse(data));
@@ -60,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 ContentValues cv = new ContentValues();
                 cv.put("nome", nome);
                 cv.put("email", email);
-                cv.put("data" , dataO);
+                cv.put("dtnasc" , dataO);
                 long status = database.insert("pessoas", null, cv);
 
                 if(status > 0){
